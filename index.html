@@ -56,81 +56,71 @@
                 return "<a href='" + esc(val) + "' target='_blank'>" + text + "</a>";
             }
 
-            function makeBMSTable(info, mark) {
-                var obj = $("#table_int");
-                obj.html("");
-                $("<thead class='table-dark'><tr>"
-                    + "<th>Level</th><th>Title</th><th>作曲者</th><th>譜面作者</th>"
-                    + "<th>BPM</th><th>T/N</th><th>Comment</th><th>本体</th><th>差分</th>"
-                    + "</tr></thead><tbody>").appendTo(obj);
+function makeBMSTable(info, mark) {
+    var obj = $("#table_int");
+    obj.html("");
+    $("<thead class='table-dark'><tr>"
+        + "<th>Level</th><th>Title</th><th>作曲者</th><th>譜面作者</th>"
+        + "<th>BPM</th><th>T/N</th><th>Comment</th><th>本体</th><th>差分</th>"
+        + "</tr></thead><tbody>").appendTo(obj);
 
-                var x = "", count = 0, sep = null;
+    var x = "", count = 0, sep = null;
 
-                for (var i = 0; i < info.length; i++) {
-                    var level = info[i].level;
+    for (var i = 0; i < info.length; i++) {
+        var level = info[i].level;
 
-                    if (x != level) {
-                        if (sep != null) {
-                            sep.html("<td colspan='9'><b>" + mark + x + " (" + count + "譜面)</b></td>");
-                        }
-                        sep = $("<tr class='table-dark' style='text-align:center' id='" + mark + level + "'></tr>");
-                        sep.appendTo(obj);
-                        count = 0;
-                        x = level;
-                    }
-
-                    // Title 列：md5があれば LR2IRリンク
-                    var titleCell = info[i].md5
-                        ? "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5="
-                          + esc(info[i].md5) + "' target='_blank'>" + esc(info[i].title) + "</a>"
-                        : esc(info[i].title);
-
-                    var tr = $("<tr></tr>");
-
-                    // Level
-                    tr.append("<td width='5%'>" + esc(mark + level) + "</td>");
-
-                    // Title（md5があればLR2IRリンク）
-                    var titleCell = info[i].md5
-                        ? "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5="
-                          + esc(info[i].md5) + "' target='_blank'>" + esc(info[i].title) + "</a>"
-                        : esc(info[i].title);
-                    tr.append("<td width='20%'>" + titleCell + "</td>");
-
-                    // 作曲者
-                    tr.append("<td width='12%'>" + esc(info[i]["作曲者"]) + "</td>");
-
-                    // 譜面作者
-                    tr.append("<td width='12%'>" + esc(info[i]["譜面作者"]) + "</td>");
-
-                    // BPM
-                    tr.append("<td width='7%'>" + esc(info[i]["BPM"]) + "</td>");
-
-                    // T/N
-                    tr.append("<td width='6%'>" + esc(info[i]["T/N"]) + "</td>");
-
-                    // Comment
-                    tr.append("<td width='20%'>" + esc(info[i].comment) + "</td>");
-
-                    // 本体
-                    tr.append("<td width='6%'>" + linkCell(info[i]["本体"], "本体") + "</td>");
-
-                    // 差分
-                    tr.append("<td width='6%'>" + linkCell(info[i]["差分"], "差分") + "</td>");
-
-                    tr.appendTo(obj);
-
-
-                    count++;
-                }
-
-                if (sep != null) {
-                    sep.html("<td class='table-dark' style='text-align:center' colspan='9'><b>" + mark + x
-                        + " (" + count + "譜面)</b></td>");
-                }
-
-                $("</tbody>").appendTo(obj);
+        if (x != level) {
+            if (sep != null) {
+                sep.html("<td colspan='9'><b>" + mark + x + " (" + count + "譜面)</b></td>");
             }
+            sep = $("<tr class='table-dark' style='text-align:center' id='" + mark + level + "'></tr>");
+            sep.appendTo(obj);
+            count = 0;
+            x = level;
+        }
+
+        var tr = $("<tr></tr>");
+
+        // Level
+        tr.append("<td width='5%'>" + esc(mark + level) + "</td>");
+
+        // Title（md5があればLR2IRリンク）
+        var titleCell = info[i].md5
+            ? "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5="
+              + esc(info[i].md5) + "' target='_blank'>" + esc(info[i].title) + "</a>"
+            : esc(info[i].title);
+        tr.append("<td width='20%'>" + titleCell + "</td>");
+
+        // 作曲者
+        tr.append("<td width='12%'>" + esc(info[i]["作曲者"]) + "</td>");
+
+        // 譜面作者
+        tr.append("<td width='12%'>" + esc(info[i]["譜面作者"]) + "</td>");
+
+        // BPM
+        tr.append("<td width='7%'>" + esc(info[i]["BPM"]) + "</td>");
+
+        // T/N
+        tr.append("<td width='6%'>" + esc(info[i]["T/N"]) + "</td>");
+
+        // Comment
+        tr.append("<td width='20%'>" + esc(info[i].comment) + "</td>");
+
+        // 本体
+        tr.append("<td width='6%'>" + linkCell(info[i]["本体"], "本体") + "</td>");
+
+        // 差分
+        tr.append("<td width='6%'>" + linkCell(info[i]["差分"], "差分") + "</td>");
+
+        tr.appendTo(obj);
+        count++;
+    }
+
+    if (sep != null) {
+        sep.html("<td class='table-dark' style='text-align:center' colspan='9'><b>" + mark + x
+            + " (" + count + "譜面)</b></td>");
+    }
+}
         </script>
     </div>
 </body>
