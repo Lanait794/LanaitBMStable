@@ -40,11 +40,21 @@
         <script type="text/javascript">
             $(document).ready(function () {
                 $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
-                    $.getJSON(header.data_url, function (information) {
-                        makeBMSTable(information, header.symbol);
+                    $.ajax({
+                        url: header.data_url,
+                        dataType: "jsonp",   // ★ JSONPで取得
+                        jsonp: "callback",   // ★ doGet の e.parameter.callback と対応
+                        success: function (information) {
+                            makeBMSTable(information, header.symbol);
+                        },
+                        error: function (xhr, status, err) {
+                            console.error("データ取得エラー:", status, err);
+                            alert("データの読み込みに失敗しました");
+                        }
                     });
                 });
             });
+
 
             function esc(s) {
                 return (s == null ? "" : String(s))
