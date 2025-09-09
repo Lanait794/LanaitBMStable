@@ -86,18 +86,40 @@
                         : esc(info[i].title);
 
                     var tr = $("<tr></tr>");
+
+                    // Level
                     tr.append("<td width='5%'>" + esc(mark + level) + "</td>");
+
+                    // Title（md5があればLR2IRリンク）
+                    var titleCell = info[i].md5
+                        ? "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5="
+                          + esc(info[i].md5) + "' target='_blank'>" + esc(info[i].title) + "</a>"
+                        : esc(info[i].title);
                     tr.append("<td width='20%'>" + titleCell + "</td>");
+
+                    // 作曲者
                     tr.append("<td width='12%'>" + esc(info[i]["作曲者"]) + "</td>");
+
+                    // 譜面作者
                     tr.append("<td width='12%'>" + esc(info[i]["譜面作者"]) + "</td>");
+
+                    // BPM
                     tr.append("<td width='7%'>" + esc(info[i]["BPM"]) + "</td>");
+
+                    // T/N
                     tr.append("<td width='6%'>" + esc(info[i]["T/N"]) + "</td>");
+
+                    // Comment
                     tr.append("<td width='20%'>" + esc(info[i].comment) + "</td>");
-                    var bodyCell = info[i]["本体"];
-                    tr.append("<td width='6%'>" + linkCell(bodyCell, "本体") + "</td>");
-                    var diffCell = info[i]["差分"];
-                    tr.append("<td width='6%'>" + linkCell(diffCell, "差分") + "</td>");
+
+                    // 本体
+                    tr.append("<td width='6%'>" + linkCell(info[i]["本体"], "本体") + "</td>");
+
+                    // 差分
+                    tr.append("<td width='6%'>" + linkCell(info[i]["差分"], "差分") + "</td>");
+
                     tr.appendTo(obj);
+
 
                     count++;
                 }
