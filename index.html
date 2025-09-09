@@ -93,8 +93,10 @@
                     tr.append("<td width='7%'>" + esc(info[i]["BPM"]) + "</td>");
                     tr.append("<td width='6%'>" + esc(info[i]["T/N"]) + "</td>");
                     tr.append("<td width='20%'>" + esc(info[i].comment) + "</td>");
-                    tr.append("<td width='6%'>" + linkCell(info[i]["本体"], "本体") + "</td>");
-                    tr.append("<td width='6%'>" + linkCell(info[i]["差分"], "差分") + "</td>");
+                    var bodyCell = info[i]["本体"];
+                    tr.append("<td width='6%'>" + linkCell(bodyCell, "本体") + "</td>");
+                    var diffCell = info[i]["差分"];
+                    tr.append("<td width='6%'>" + linkCell(diffCell, "差分") + "</td>");
                     tr.appendTo(obj);
 
                     count++;
