@@ -40,7 +40,10 @@
         </div>
 
         <div>
-            <table class="table table-light table-striped table-hover" id="table_int"></table>
+            <table class="table table-light table-striped table-hover"
+                   id="table_int"
+                   style="table-layout:fixed; width:100%;">
+            </table>
         </div>
 
         <script type="text/javascript">
@@ -103,8 +106,7 @@
                           + esc(info[i].md5) + "' target='_blank'>" + esc(info[i].title) + "</a>"
                         : esc(info[i].title);
 
-                    tr.append("<td width='18%'>" + titleCell + "</td>");
-
+                    tr.append("<td width='28%'>" + titleCell + "</td>");
                     tr.append("<td width='10%'>" + esc(info[i]['作曲者']) + "</td>");
                     tr.append("<td width='7%'>" + esc(info[i]['BPM']) + "</td>");
                     tr.append("<td width='6%'>" + esc(info[i]['T/N']) + "</td>");
@@ -113,8 +115,7 @@
                     commentText = commentText.replace(/sl\d+/g,
                         "<span style='color:red;'>$&</span>");
 
-                    tr.append("<td width='34%'>" + commentText + "</td>");
-
+                    tr.append("<td width='28%'>" + commentText + "</td>");
                     tr.append("<td width='6%'>" + linkCell(info[i]['本体'], "本体") + "</td>");
                     tr.append("<td width='6%'>" + linkCell(info[i]['差分'], "差分") + "</td>");
 
