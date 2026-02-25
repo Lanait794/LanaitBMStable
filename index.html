@@ -48,14 +48,19 @@
                 $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
                     $.getJSON(header.data_url, function (information) {
 
-                        // タイトルソート
+                        // レベル → タイトル の優先順でソート
                         information.sort(function(a, b){
-                            return a.title.localeCompare(b.title, 'ja');
-                        });
 
-                        // レベルソート
-                        information.sort(function(a, b){
-                            return Number(a.level) - Number(b.level);
+                            // ?? は最後
+                            if (a.level === "??") return 1;
+                            if (b.level === "??") return -1;
+
+                            // 数値レベル比較
+                            var levelDiff = Number(a.level) - Number(b.level);
+                            if (levelDiff !== 0) return levelDiff;
+
+                            // 同レベルならタイトル比較
+                            return a.title.localeCompare(b.title, 'ja');
                         });
 
                         makeBMSTable(information, header.symbol);
