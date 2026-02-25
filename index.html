@@ -114,7 +114,7 @@ function makeBMSTable(info, mark) {
             var mochaURL = "https://mocha-repository.info/song.php?sha256="
                            + esc(info[i].sha256);
             mochaCell = "<a href='" + mochaURL + "' target='_blank' rel='noopener' "
-                      + "style='font-size:1.1em;'>☕</a>";
+          + "style='font-size:1.1em; text-decoration:none; outline:none;'>☕</a>";
         }
         tr.append("<td style='text-align:center;'>" + mochaCell + "</td>");
 
