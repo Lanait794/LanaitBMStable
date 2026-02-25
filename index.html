@@ -40,7 +40,10 @@
         </div>
 
         <div>
-            <table class="table table-light table-striped table-hover" id="table_int"></table>
+            <table class="table table-light table-striped table-hover"
+                   id="table_int"
+                   style="width:100%;">
+            </table>
         </div>
 
         <script type="text/javascript">
@@ -48,7 +51,6 @@
                 $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
                     $.getJSON(header.data_url, function (information) {
 
-                        // レベル昇順 → 同レベル内タイトル順
                         information.sort(function(a, b){
 
                             if (a.level === "??") return 1;
@@ -88,6 +90,7 @@
                     + "<th>BPM</th>"
                     + "<th>T/N</th>"
                     + "<th>Comment</th>"
+                    + "<th>☕</th>"
                     + "<th>本体</th>"
                     + "<th>差分</th>"
                     + "</tr></thead><tbody>").appendTo(obj);
@@ -96,27 +99,35 @@
 
                     var tr = $("<tr></tr>");
 
-                    tr.append("<td width='5%'>" + esc(mark + info[i].level) + "</td>");
+                    tr.append("<td style='white-space:nowrap;'>" + esc(mark + info[i].level) + "</td>");
 
                     var titleCell = info[i].md5
                         ? "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5="
                           + esc(info[i].md5) + "' target='_blank'>" + esc(info[i].title) + "</a>"
                         : esc(info[i].title);
 
-                    tr.append("<td width='28%'>" + titleCell + "</td>");
-
-                    tr.append("<td width='10%'>" + esc(info[i]['作曲者']) + "</td>");
-                    tr.append("<td width='7%'>" + esc(info[i]['BPM']) + "</td>");
-                    tr.append("<td width='6%'>" + esc(info[i]['T/N']) + "</td>");
+                    tr.append("<td>" + titleCell + "</td>");
+                    tr.append("<td style='white-space:nowrap;'>" + esc(info[i]['作曲者']) + "</td>");
+                    tr.append("<td style='white-space:nowrap;'>" + esc(info[i]['BPM']) + "</td>");
+                    tr.append("<td style='white-space:nowrap;'>" + esc(info[i]['T/N']) + "</td>");
 
                     var commentText = esc(info[i].comment);
                     commentText = commentText.replace(/sl\d+/g,
                         "<span style='color:red;'>$&</span>");
+                    tr.append("<td>" + commentText + "</td>");
 
-                    tr.append("<td width='20%'>" + commentText + "</td>");
+                    // ☕ mochaリンク
+                    var mochaCell = "";
+                    if (info[i].sha256) {
+                        var mochaURL = "https://mocha-repository.info/song.php?sha256="
+                                       + esc(info[i].sha256);
+                        mochaCell = "<a href='" + mochaURL + "' target='_blank' rel='noopener' "
+                                  + "style='font-size:1.1em;'>☕</a>";
+                    }
+                    tr.append("<td style='white-space:nowrap; text-align:center;'>" + mochaCell + "</td>");
 
-                    tr.append("<td width='6%'>" + linkCell(info[i]['本体'], "本体") + "</td>");
-                    tr.append("<td width='6%'>" + linkCell(info[i]['差分'], "差分") + "</td>");
+                    tr.append("<td style='white-space:nowrap;'>" + linkCell(info[i]['本体'], "本体") + "</td>");
+                    tr.append("<td style='white-space:nowrap;'>" + linkCell(info[i]['差分'], "差分") + "</td>");
 
                     tr.appendTo(obj);
                 }
