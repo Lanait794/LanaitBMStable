@@ -47,6 +47,17 @@
             $(document).ready(function () {
                 $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
                     $.getJSON(header.data_url, function (information) {
+
+                        // タイトルソート
+                        information.sort(function(a, b){
+                            return a.title.localeCompare(b.title, 'ja');
+                        });
+
+                        // レベルソート
+                        information.sort(function(a, b){
+                            return Number(a.level) - Number(b.level);
+                        });
+
                         makeBMSTable(information, header.symbol);
                     });
                 });
