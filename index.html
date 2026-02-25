@@ -48,18 +48,15 @@
                 $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
                     $.getJSON(header.data_url, function (information) {
 
-                        // レベル → タイトル の優先順でソート
+                        // レベル昇順 → 同レベル内タイトル順
                         information.sort(function(a, b){
 
-                            // ?? は最後
                             if (a.level === "??") return 1;
                             if (b.level === "??") return -1;
 
-                            // 数値レベル比較
                             var levelDiff = Number(a.level) - Number(b.level);
                             if (levelDiff !== 0) return levelDiff;
 
-                            // 同レベルならタイトル比較
                             return a.title.localeCompare(b.title, 'ja');
                         });
 
@@ -85,8 +82,14 @@
                 obj.html("");
 
                 $("<thead class='table-dark'><tr>"
-                    + "<th>Level</th><th>Title</th><th>作曲者</th><th>譜面作者</th>"
-                    + "<th>BPM</th><th>T/N</th><th>Comment</th><th>本体</th><th>差分</th>"
+                    + "<th>Level</th>"
+                    + "<th>Title</th>"
+                    + "<th>作曲者</th>"
+                    + "<th>BPM</th>"
+                    + "<th>T/N</th>"
+                    + "<th>Comment</th>"
+                    + "<th>本体</th>"
+                    + "<th>差分</th>"
                     + "</tr></thead><tbody>").appendTo(obj);
 
                 for (var i = 0; i < info.length; i++) {
@@ -100,17 +103,17 @@
                           + esc(info[i].md5) + "' target='_blank'>" + esc(info[i].title) + "</a>"
                         : esc(info[i].title);
 
-                    tr.append("<td width='20%'>" + titleCell + "</td>");
+                    tr.append("<td width='18%'>" + titleCell + "</td>");
 
-                    tr.append("<td width='12%'>" + esc(info[i]['作曲者']) + "</td>");
-                    tr.append("<td width='12%'>" + esc(info[i]['譜面作者']) + "</td>");
+                    tr.append("<td width='10%'>" + esc(info[i]['作曲者']) + "</td>");
                     tr.append("<td width='7%'>" + esc(info[i]['BPM']) + "</td>");
                     tr.append("<td width='6%'>" + esc(info[i]['T/N']) + "</td>");
 
                     var commentText = esc(info[i].comment);
                     commentText = commentText.replace(/sl\d+/g,
                         "<span style='color:red;'>$&</span>");
-                    tr.append("<td width='20%'>" + commentText + "</td>");
+
+                    tr.append("<td width='34%'>" + commentText + "</td>");
 
                     tr.append("<td width='6%'>" + linkCell(info[i]['本体'], "本体") + "</td>");
                     tr.append("<td width='6%'>" + linkCell(info[i]['差分'], "差分") + "</td>");
