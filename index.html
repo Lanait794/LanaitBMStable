@@ -25,7 +25,7 @@
 
     <div class="alert alert-success mb-3" role="alert">
         <p>Lanaitの譜面とLanaitの曲で作ってもらった譜面まとめ。</p>
-        <p>レベルはSatellite基準。Stella以上は13, 14表記です。</p>
+        <p>レベルはSatellite基準。Stella以上は13表記。</p>
         <hr>
         <p class="mb-0">
             何かあれば
@@ -123,8 +123,8 @@ function makeBMSTable(info, mark) {
         tr.append("<td style='white-space:nowrap;'>" + esc(info[i]['T/N']) + "</td>");
 
         var commentText = esc(info[i].comment);
-        commentText = commentText.replace(/sl\d+/g,
-            "<span style='color:red;'>$&</span>");
+        commentText = commentText.replace(/(sl|st)\d+/g,
+        "<span style='color:red;'>$&</span>");
         tr.append("<td>" + commentText + "</td>");
 
         tr.append("<td style='white-space:nowrap;'>" + linkCell(info[i]['本体'], "本体") + "</td>");
