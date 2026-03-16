@@ -124,7 +124,7 @@ function makeBMSTable(info, mark) {
 
         var commentText = esc(info[i].comment);
         commentText = commentText.replace(/(sl|st)\d+/g,
-        "<span style='color:red;'>$&</span>");
+            "<span style='color:red;'>$&</span>");
         tr.append("<td>" + commentText + "</td>");
 
         tr.append("<td style='white-space:nowrap;'>" + linkCell(info[i]['本体'], "本体") + "</td>");
