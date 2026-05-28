@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -86,7 +87,6 @@ function makeBMSTable(info, mark) {
     $("<thead class='table-dark'><tr>"
         + "<th>Level</th>"
         + "<th style='width:30%;'>Title</th>"
-        + "<th style='width:4%; text-align:center;'>☕</th>"
         + "<th>作曲者</th>"
         + "<th>BPM</th>"
         + "<th>T/N</th>"
@@ -101,22 +101,22 @@ function makeBMSTable(info, mark) {
 
         tr.append("<td style='white-space:nowrap;'>" + esc(mark + info[i].level) + "</td>");
 
-        var titleCell = info[i].md5
-            ? "<a href='http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5="
-              + esc(info[i].md5) + "' target='_blank'>" + esc(info[i].title) + "</a>"
+        var titleURL = null;
+
+        if (info[i].sha256) {
+            titleURL = "https://mocha-repository.info/song.php?sha256="
+                       + esc(info[i].sha256);
+        } else if (info[i].md5) {
+            titleURL = "http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5="
+                       + esc(info[i].md5);
+        }
+
+        var titleCell = titleURL
+            ? "<a href='" + titleURL + "' target='_blank' rel='noopener'>"
+              + esc(info[i].title) + "</a>"
             : esc(info[i].title);
 
         tr.append("<td>" + titleCell + "</td>");
-
-        // ☕ mochaリンク（Titleと作曲者の間）
-        var mochaCell = "";
-        if (info[i].sha256) {
-            var mochaURL = "https://mocha-repository.info/song.php?sha256="
-                           + esc(info[i].sha256);
-            mochaCell = "<a href='" + mochaURL + "' target='_blank' rel='noopener' "
-          + "style='font-size:1.1em; text-decoration:none; outline:none;'>☕</a>";
-        }
-        tr.append("<td style='text-align:center;'>" + mochaCell + "</td>");
 
         tr.append("<td style='white-space:nowrap;'>" + esc(info[i]['作曲者']) + "</td>");
         tr.append("<td style='white-space:nowrap;'>" + esc(info[i]['BPM']) + "</td>");
@@ -138,3 +138,4 @@ function makeBMSTable(info, mark) {
 </div>
 </body>
 </html>
+```
