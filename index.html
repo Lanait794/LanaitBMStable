@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
 
@@ -51,14 +52,37 @@ $(document).ready(function () {
     $.getJSON($("meta[name=bmstable]").attr("content"), function (header) {
         $.getJSON(header.data_url, function (information) {
 
-            information.sort(function(a, b){
+            information.sort(function(a, b) {
 
+                if (a.level === "??" && b.level === "??") {
+                    return a.title.localeCompare(b.title, 'ja');
+                }
                 if (a.level === "??") return 1;
                 if (b.level === "??") return -1;
 
-                var levelDiff = Number(a.level) - Number(b.level);
-                if (levelDiff !== 0) return levelDiff;
+                // 接頭文字の長さと数値を取得
+                function getSortKey(level) {
+                    var match = String(level).match(/^(\D*)(\d+)$/);
 
+                    if (!match) return [99, 999];
+
+                    return [match[1].length, Number(match[2])];
+                }
+
+                var keyA = getSortKey(a.level);
+                var keyB = getSortKey(b.level);
+
+                // 葵0～葵12 → 葵葵0～葵葵N の順
+                if (keyA[0] !== keyB[0]) {
+                    return keyA[0] - keyB[0];
+                }
+
+                // 同じ接頭文字なら数値順
+                if (keyA[1] !== keyB[1]) {
+                    return keyA[1] - keyB[1];
+                }
+
+                // 同じレベルなら曲名順
                 return a.title.localeCompare(b.title, 'ja');
             });
 
@@ -137,4 +161,3 @@ function makeBMSTable(info, mark) {
 </div>
 </body>
 </html>
-```
