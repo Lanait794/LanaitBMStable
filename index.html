@@ -126,12 +126,11 @@ function makeBMSTable(info, mark) {
 
         var titleURL = null;
 
-        if (info[i].sha256) {
-            titleURL = "https://mocha-repository.info/song.php?sha256="
-                       + esc(info[i].sha256);
-        } else if (info[i].md5) {
-            titleURL = "http://www.dream-pro.info/~lavalse/LR2IR/search.cgi?mode=ranking&bmsmd5="
-                       + esc(info[i].md5);
+        var titleURL = null;
+        
+        if (info[i].md5) {
+            titleURL = "https://bms-ir.org/new/song?songmd5="
+                       + encodeURIComponent(info[i].md5);
         }
 
         var titleCell = titleURL
